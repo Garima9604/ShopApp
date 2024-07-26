@@ -1,0 +1,67 @@
+<%- include('../partials/header')%>
+  <%- include('../partials/navbar')%>
+    <%- include('../partials/flash')%>
+
+      <section class="container">
+        <h1 class="display-6 mt-5 text-center text-decoration-underline">MY CART</h1>
+
+        <div class="row">
+          <div class="col-lg-8">
+            <% for(let item of user.cart){ %>
+              <div class="card mx-auto m-3 border" style="max-width: 500px">
+                <div class="row g-0">
+                  <div class="col-4">
+                    <img class="img-fluid rounded-start" src="<%=item.img%>" alt="" />
+                  </div>
+                  <div class="col-8">
+                    <div class="card-body">
+                      <h5 class="card-title">
+                        <%=item.name%>
+                      </h5>
+                      <p class="card-text">
+                        <%=item.desc%>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <% } %>
+          </div>
+          <div class="col-lg-4">
+
+            <% for(let item of user.cart){ %>
+              <ul class="list-group list-group-horizontal mt-1">
+                <li class="list-group-item w-75 text-wrap">
+                  <%=item.name%>
+                </li>
+                <li class="list-group-item">
+                  Rs. <%=item.price%>
+                </li>
+              </ul>
+              <% } %>
+
+                <ul class="list-group list-group-horizontal mt-5">
+                  <li class="list-group-item w-75">
+                    Total Amount:
+                  </li>
+                  <li class="list-group-item">
+                    Rs. <%=totalAmount%>
+                  </li>
+                </ul>
+
+                <form action="/payment_gateway/payumoney" method="POST">
+                  <input type="hidden" name="amount" value="<%=totalAmount%>" />
+                  <input type="hidden" name="phone" value="9999999999" />
+                  <input type="hidden" name="service_provider" value="payu_paisa" />
+                  <input type="hidden" class="product" name="productinfo" value="<%=productInfo%>" />
+
+                  <button type="submit" class="btn btn-sm btn-success my-3">Checkout</button>
+                </form>
+
+
+
+          </div>
+        </div>
+      </section>
+
+      <%- include('../partials/footer')%>
