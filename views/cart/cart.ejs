@@ -49,15 +49,9 @@
                   </li>
                 </ul>
 
-                <form action="/payment_gateway/payumoney" method="POST">
-                  <input type="hidden" name="amount" value="<%=totalAmount%>" />
-                  <input type="hidden" name="phone" value="9999999999" />
-                  <input type="hidden" name="service_provider" value="payu_paisa" />
-                  <input type="hidden" class="product" name="productinfo" value="<%=productInfo%>" />
-
+                <a href="/product/payment">
                   <button type="submit" class="btn btn-sm btn-success my-3">Checkout</button>
-                </form>
-
+                </a>
 
 
           </div>

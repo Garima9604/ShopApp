@@ -19,11 +19,12 @@ const reviewRoutes = require("./routes/review");
 const authRoutes = require("./routes/auth");
 const cartRoutes = require("./routes/cart");
 const productApi = require("./routes/api/productapi"); //api
-const paymentRoutes = require("./routes/payment"); //payment routes
+// const paymentRoutes = require("./routes/payment"); //payment routes
 
 mongoose.set("strictQuery", true);
 mongoose
-  .connect("mongodb://127.0.0.1:27017/ShopApp")
+  // .connect("mongodb://127.0.0.1:27017/ShopApp")
+  .connect(process.env.dbUrl)
   .then(() => {
     console.log("DB connected");
   })
@@ -82,9 +83,9 @@ app.use(reviewRoutes);
 app.use(authRoutes);
 app.use(cartRoutes);
 app.use(productApi);
-app.use(paymentRoutes);
+// app.use(paymentRoutes);
 
-const port = 8081;
+const port = 8080;
 app.listen(port, () => {
   console.log(`server connected at port : ${port}`);
 });
