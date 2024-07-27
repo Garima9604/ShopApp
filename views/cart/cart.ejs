@@ -2,7 +2,7 @@
   <%- include('../partials/navbar')%>
     <%- include('../partials/flash')%>
 
-      <section class="h-100 h-custom" style="background-color: #CADCFC;">
+      <section class="h-100 h-custom" style="background-color: #9C9494; margin-top: 50px;">
         <div class="container py-5 h-100">
           <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-12">
@@ -95,27 +95,6 @@
         </div>
       </section>
 
+
+      <script src="/js/cart.js"></script>
       <%- include('../partials/footer')%>
-
-
-        <script>
-          function decreaseQuantity(button) {
-            console.log('decrease ');
-            const input = button.parentNode.querySelector('input[type=number]');
-            if (input.value > 0) {
-              console.log("Value : ", input.value);
-              input.stepDown();
-            }
-          }
-
-          function updateTotal() {
-
-          }
-
-          function increaseQuantity(button) {
-            console.log('increase ');
-            const input = button.parentNode.querySelector('input[type=number]');
-            console.log("Value : ", input.value);
-            input.stepUp();
-          }
-        </script>

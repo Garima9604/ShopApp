@@ -11,12 +11,17 @@ main {
     width: 100%;
 }
 
-.f {
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: inset 2px 2px 20px;
-}
-
 .product-card .btnn {
     background-color: var(--main-color);
+}
+
+h3 {
+    color: white;
+}
+
+.form-LS {
+    color: white;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    margin-left: 60%;
 }

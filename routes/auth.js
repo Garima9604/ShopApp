@@ -16,7 +16,7 @@ router.post("/register", async (req, res) => {
     if (err) {
       return next(err);
     }
-    req.flash("success", "Welcome New User !!");
+    req.flash("success", `Welcome ${username} !!`);
     return res.redirect("/products");
   });
 });
