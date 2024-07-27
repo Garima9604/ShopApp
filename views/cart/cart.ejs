@@ -2,60 +2,120 @@
   <%- include('../partials/navbar')%>
     <%- include('../partials/flash')%>
 
-      <section class="container">
-        <h1 class="display-6 mt-5 text-center text-decoration-underline">MY CART</h1>
+      <section class="h-100 h-custom" style="background-color: #CADCFC;">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12">
+              <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+                <div class="card-body p-0">
+                  <div class="row g-0">
+                    <div class="col-lg-8">
+                      <div class="p-5">
+                        <div class="d-flex justify-content-between align-items-center mb-5">
+                          <h1 class="fw-bold mb-0">Cart</h1>
+                          <h6 class="mb-0 text-muted">
+                            <%=user.cart.length%> items
+                          </h6>
+                        </div>
+                        <hr class="my-4">
 
-        <div class="row">
-          <div class="col-lg-8">
-            <% for(let item of user.cart){ %>
-              <div class="card mx-auto m-3 border" style="max-width: 500px">
-                <div class="row g-0">
-                  <div class="col-4">
-                    <img class="img-fluid rounded-start" src="<%=item.img%>" alt="" />
-                  </div>
-                  <div class="col-8">
-                    <div class="card-body">
-                      <h5 class="card-title">
-                        <%=item.name%>
-                      </h5>
-                      <p class="card-text">
-                        <%=item.desc%>
-                      </p>
+
+                        <% for(let item of user.cart){ %>
+
+                          <div class="row mb-4 d-flex justify-content-between align-items-center">
+                            <div class="col-md-2 col-lg-2 col-xl-2">
+                              <img src="<%=item.img%>" class="img-fluid rounded-3" alt="Cotton T-shirt">
+                            </div>
+                            <div class="col-md-3 col-lg-3 col-xl-3">
+                              <h6 class="text-muted">
+                                <%=item.name%>
+                              </h6>
+
+                            </div>
+
+                            <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                              <button class="btn btn-link px-2" onclick="decreaseQuantity(this)">
+                                <i class="fas fa-minus"></i>
+                              </button>
+                              <input id="form1" min="1" name="quantity" value="1" type="number" max="10"
+                                class="form-control form-control-sm" style="width: 3rem;" />
+                              <button class="btn btn-link px-2" onclick="increaseQuantity(this)">
+                                <i class="fas fa-plus"></i>
+                              </button>
+                            </div>
+
+                            <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                              <h6 class="mb-0"> Rs. <%=item.price%>
+                              </h6>
+                            </div>
+
+                            <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                              <a href="/user/cart/remove/<%=item._id%>" class="text-muted"><i
+                                  class="fas fa-times"></i></a>
+                            </div>
+
+                          </div>
+
+                          <hr class="my-4">
+
+                          <% } %>
+
+                            <div class="pt-5">
+                              <h6 class="mb-0"><a href="/products" class="text-body"><i
+                                    class="fas fa-long-arrow-alt-left me-2"></i>Back to shop</a></h6>
+                            </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 bg-body-tertiary">
+                      <div class="p-5">
+                        <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
+                        <hr class="my-4">
+
+                        <div class="d-flex justify-content-between mb-4">
+                          <h5 class="text-uppercase">
+                            Total Amount :
+                          </h5>
+                          <h5>Rs. <%=totalAmount%>
+                          </h5>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <a href="/product/payment">
+                          <button type="submit" class="btn btn-sm btn-success my-3">Checkout</button>
+                        </a>
+
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <% } %>
-          </div>
-          <div class="col-lg-4">
-
-            <% for(let item of user.cart){ %>
-              <ul class="list-group list-group-horizontal mt-1">
-                <li class="list-group-item w-75 text-wrap">
-                  <%=item.name%>
-                </li>
-                <li class="list-group-item">
-                  Rs. <%=item.price%>
-                </li>
-              </ul>
-              <% } %>
-
-                <ul class="list-group list-group-horizontal mt-5">
-                  <li class="list-group-item w-75">
-                    Total Amount:
-                  </li>
-                  <li class="list-group-item">
-                    Rs. <%=totalAmount%>
-                  </li>
-                </ul>
-
-                <a href="/product/payment">
-                  <button type="submit" class="btn btn-sm btn-success my-3">Checkout</button>
-                </a>
-
-
+            </div>
           </div>
         </div>
       </section>
 
       <%- include('../partials/footer')%>
+
+
+        <script>
+          function decreaseQuantity(button) {
+            console.log('decrease ');
+            const input = button.parentNode.querySelector('input[type=number]');
+            if (input.value > 0) {
+              console.log("Value : ", input.value);
+              input.stepDown();
+            }
+          }
+
+          function updateTotal() {
+
+          }
+
+          function increaseQuantity(button) {
+            console.log('increase ');
+            const input = button.parentNode.querySelector('input[type=number]');
+            console.log("Value : ", input.value);
+            input.stepUp();
+          }
+        </script>

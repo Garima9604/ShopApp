@@ -81,4 +81,19 @@ router.get("/cancel", (req, res) => {
   res.redirect("/products");
 });
 
+router.get("/user/cart/remove/:id", async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const userId = req.user._id;
+    const user = await User.findById(userId);
+    user.cart = user.cart.filter(
+      (product) => product._id.toString() !== productId
+    );
+    await user.save();
+    res.redirect("/user/cart");
+  } catch (e) {
+    res.status(500).render("error", { err: e.message });
+  }
+});
+
 module.exports = router;
