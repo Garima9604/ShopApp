@@ -4,7 +4,7 @@ const User = require("../models/User");
 const Product = require("../models/Product");
 const router = express.Router();
 
-const stripe = require("stripe")("sk_test_tR3PYbcVNZZ796tH88S4VQ2u");
+const stripe = require("stripe")(process.env.stripeKey);
 
 router.get("/user/cart", isLoggedIn, async (req, res) => {
   let userId = req.user._id;
