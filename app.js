@@ -26,7 +26,7 @@ mongoose
   // .connect("mongodb://127.0.0.1:27017/ShopApp")
   .connect(process.env.dbUrl)
   .then(() => {
-    console.log("process.env.dbUrl --> ", process.env.dbUrl);
+    // console.log("process.env.dbUrl --> ", process.env.dbUrl);
     console.log("DB connected");
   })
   .catch((err) => {

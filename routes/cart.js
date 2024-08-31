@@ -63,7 +63,11 @@ router.get("/product/payment", async (req, res) => {
     customer: customer.id, // Link the customer to the session
   });
 
-  res.redirect(303, session.url);
+  // Pass the publishable key to the frontend
+  const publishableKey = process.env.STRIPE_PUBLISHABLE_KEY;
+  res.render("payment", { sessionId: session.id, publishableKey });
+
+  // res.redirect(303, session.url);
 });
 
 router.get("/success", async (req, res) => {
