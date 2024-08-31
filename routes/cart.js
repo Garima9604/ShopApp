@@ -30,10 +30,11 @@ router.post("/user/:productId/add", isLoggedIn, async (req, res) => {
 router.get("/product/payment", async (req, res) => {
   let user = req.user;
   let products = await User.findById({ _id: user._id }).populate("cart");
-  console.log(products.cart);
+  // console.log(products.cart);
 
   const customer = await stripe.customers.create({
-    name: "Shinchan Nohara",
+    name: user.username,
+    email: user.email,
     address: {
       line1: "510 Townsend St",
       postal_code: "98140",
@@ -42,6 +43,8 @@ router.get("/product/payment", async (req, res) => {
       country: "US",
     },
   });
+  console.log("req.user.name -> ", req.user);
+  console.log("Current Customer who made an order : ", customer);
 
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
@@ -63,11 +66,7 @@ router.get("/product/payment", async (req, res) => {
     customer: customer.id, // Link the customer to the session
   });
 
-  // Pass the publishable key to the frontend
-  const publishableKey = process.env.STRIPE_PUBLISHABLE_KEY;
-  res.render("payment", { sessionId: session.id, publishableKey });
-
-  // res.redirect(303, session.url);
+  res.redirect(303, session.url);
 });
 
 router.get("/success", async (req, res) => {
