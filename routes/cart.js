@@ -2,6 +2,7 @@ const express = require("express");
 const { isLoggedIn } = require("../middleware");
 const User = require("../models/User");
 const Product = require("../models/Product");
+const Order = require("../models/Order");
 const router = express.Router();
 
 const stripe = require("stripe")(process.env.stripeKey);
@@ -30,7 +31,8 @@ router.post("/user/:productId/add", isLoggedIn, async (req, res) => {
 router.get("/product/payment", async (req, res) => {
   let user = req.user;
   let products = await User.findById({ _id: user._id }).populate("cart");
-  // console.log(products.cart);
+  console.log("\n******************NEW ORDER STARTS **************** ");
+  console.log(products.cart);
 
   const customer = await stripe.customers.create({
     name: user.username,
@@ -61,8 +63,10 @@ router.get("/product/payment", async (req, res) => {
       };
     }),
     mode: "payment",
-    success_url: "http://localhost:8080/success",
-    cancel_url: "http://localhost:8080/cancel",
+    success_url: "https://shopapp-90nf.onrender.com//success",
+    cancel_url: "https://shopapp-90nf.onrender.com//cancel",
+    // success_url: "http://localhost:8080/success",
+    // cancel_url: "http://localhost:8080/cancel",
     customer: customer.id, // Link the customer to the session
   });
 
@@ -72,6 +76,26 @@ router.get("/product/payment", async (req, res) => {
 router.get("/success", async (req, res) => {
   let currUser = req.user;
   // console.log("Before Current User :-> ", currUser);
+  console.log("CurrUser.cart -> ", currUser.cart);
+  let products = currUser.cart.map((productId) => ({
+    product: productId,
+    quantity: 1, // Assuming 1 for now, update logic if needed
+  }));
+  console.log("Cart Products : ", products);
+
+  let userId = req.user._id;
+  let user = await User.findById(userId).populate("cart");
+  //   console.log(user, "sam");
+  let totalAmount = user.cart.reduce((sum, curr) => sum + curr.price, 0);
+
+  const order = new Order({
+    user: currUser._id,
+    products,
+    totalAmount,
+    status: "completed",
+  });
+  console.log("Cart Order : ", order);
+  await order.save();
   currUser.cart = [];
   await currUser.save();
   // console.log("After Current User :-> ", currUser);
@@ -97,6 +121,12 @@ router.get("/user/cart/remove/:id", async (req, res) => {
   } catch (e) {
     res.status(500).render("error", { err: e.message });
   }
+});
+
+router.get("/orders", isLoggedIn, async (req, res) => {
+  let userId = req.user._id;
+  let orders = await Order.find({ user: userId }).populate("products.product");
+  res.render("orders/order", { orders });
 });
 
 module.exports = router;

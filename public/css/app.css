@@ -25,3 +25,21 @@ h3 {
     margin-bottom: 30px;
     margin-left: 60%;
 }
+
+.order {
+    margin-top: 5%;
+    min-height: 80vh;
+}
+
+.orderP {
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.item {
+    margin: 20px 0;
+}
+
+.item li {
+    list-style: none;
+}

@@ -1,0 +1,40 @@
+<%- include('../partials/header')%>
+    <%- include('../partials/navbar')%>
+        <%- include('../partials/flash')%>
+
+
+            <%if(orders.length==0){%>
+
+                <h1 class="order">No Orders Yet ....</h1>
+
+                <%}else{%>
+
+                    <% orders.forEach(order=> { %>
+                        <div class="orderP">
+                            <div class="card text-center m-auto p-5 w-75">
+                                <div class="card-header d-flex justify-content-between">
+                                    Order Date: <%= order.createdAt.toDateString() %>
+                                        <p class="card-title">Status: <%= order.status %>
+                                        </p>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="item">
+                                        <% order.products.forEach(p=> { %>
+                                            <li>
+                                                <p>
+                                                    <%= p.product.name %> - ₹<%= p.product.price %> (Qty: <%= p.quantity
+                                                                %>)
+                                                </p>
+                                            </li>
+                                            <% }) %>
+                                    </ul>
+                                </div>
+                                <div class="card-footer text-body-secondary">
+                                    <p>Total Amount: ₹<%= order.totalAmount %>
+                                    </p>
+                                </div>
+                            </div>
+                            <% }) %>
+                        </div>
+                        <%}%>
+                            <%- include('../partials/footer')%>
