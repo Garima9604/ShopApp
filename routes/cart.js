@@ -63,8 +63,8 @@ router.get("/product/payment", async (req, res) => {
       };
     }),
     mode: "payment",
-    success_url: "https://shopapp-90nf.onrender.com//success",
-    cancel_url: "https://shopapp-90nf.onrender.com//cancel",
+    success_url: "https://shopapp-90nf.onrender.com/success",
+    cancel_url: "https://shopapp-90nf.onrender.com/cancel",
     // success_url: "http://localhost:8080/success",
     // cancel_url: "http://localhost:8080/cancel",
     customer: customer.id, // Link the customer to the session
