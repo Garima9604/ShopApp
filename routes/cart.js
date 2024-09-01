@@ -30,7 +30,10 @@ router.post("/user/:productId/add", isLoggedIn, async (req, res) => {
 
 router.get("/product/payment", async (req, res) => {
   let user = req.user;
+  if (!user) throw new Error("User not authenticated");
   let products = await User.findById({ _id: user._id }).populate("cart");
+  if (!products || !products.cart.length)
+    throw new Error("No products in cart");
   console.log("\n******************NEW ORDER STARTS **************** ");
   console.log(products.cart);
 
